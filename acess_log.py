@@ -20,7 +20,11 @@ if __name__ == "__main__":
     df = sqlContext.createDataFrame(rdd, StringType())
     
     
-    df = df.select(regexp_extract('value', '([^ ]*)', 1).alias('host'), regexp_extract('value', ' - - \[([^\]]*)\]', 1).alias('data'), regexp_extract('value', ' "(.*?)"', 1).alias('requisicao'), substring(regexp_extract('value', '([0-9]".*)', 1), 4, 3).alias('http'), substring(regexp_extract('value', '([0-9]".*)', 1), 8, 4).alias('bytes'))
+    df = df.select(regexp_extract('value', '([^ ]*)', 1).alias('host'), \
+                   regexp_extract('value', ' - - \[([^\]]*)\]', 1).alias('data'), \
+                   regexp_extract('value', ' "(.*?)"', 1).alias('requisicao'), \
+                   substring(regexp_extract('value', '([0-9]".*)', 1), 4, 3).alias('http'), \
+                   substring(regexp_extract('value', '([0-9]".*)', 1), 8, 4).alias('bytes'))
     
     #Resposta 1
     df.agg(countDistinct('host')).show()
